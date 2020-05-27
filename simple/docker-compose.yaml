@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: wodby/mariadb:$MARIADB_TAG
+    container_name: ${PROJECT_NAME}_mariadb
+    stop_grace_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+    volumes:
+      - ./volumes/mariadb:/var/lib/mysql
+
+  php:
+    #image: wodby/drupal-php:$PHP_TAG
+    build:
+      context: ../docker-images/drupal
+    container_name: ${PROJECT_NAME}_php
+    environment:
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      DB_DRIVER: $DB_DRIVER
+      PHP_FPM_USER: wodby
+      PHP_FPM_GROUP: wodby
+    volumes:
+      - ./src:/var/www/html
+
+  nginx:
+    build:
+      context: ../docker-images/nginx
+    container_name: "${PROJECT_NAME}_nginx"
+    depends_on:
+      - php
+    volumes:
+      - ./src:/var/www/html:cached
+
+  portainer:
+    image: portainer/portainer
+    container_name: ${PROJECT_NAME}_portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
