@@ -2,7 +2,7 @@
 
 - Levantar stack
    - Crear imagenes
-   - Levantar servicios
+   - Arrancar servicios
    - Añadir entradas a /etc/hosts (opcional)
 
 ```shell
@@ -15,21 +15,23 @@ make up
 docker-compose ps
 ```
 
-Acceder a la url 'portainer.docker.localhost'
-
 - Comprobar logs
 ```shell
 docker-compose logs
+
 docker-compose logs -f php
 ```
 - Información de un servicio
 
 ```shell
 docker inspect my_drupal8_project_nginx
+
 docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' my_drupal8_project_nginx
 
 docker inspect my_drupal8_project_nginx | jq .[0] | jq keys
+
 docker inspect my_drupal8_project_nginx | jq .[0].State
+
 docker inspect my_drupal8_project_nginx | jq -r '.[].NetworkSettings.Networks[].IPAddress'
 ```
 
@@ -40,7 +42,5 @@ docker inspect my_drupal8_project_nginx | jq -r '.[].NetworkSettings.Networks[].
 make drupal-bootstrap
 ```
 
-- Acceder al site principal y realizar instalación
+- Acceder a la url 'drupal.docker.localhost' y realizar instalación
     - Comprobar valores para la base de datos en el fichero '.env'
-
-Acceder a la url 'drupal.docker.localhost'
