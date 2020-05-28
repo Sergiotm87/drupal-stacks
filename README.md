@@ -6,4 +6,6 @@
 
 - [Intro a la Arquitectura de Portales y Creación Contenedores](simple/README.md)
 
+- [Arquitectura de Portal drupal con elementos de caché](full/README.md)
+
 <!-- /TOC -->

@@ -67,6 +67,12 @@ mysqldump --single-transaction --quick -Be --host=${MYSQL_HOST} --user=${DB_USER
 
 - Actualizacion del drupal core
 
+0. Acceder al directorio donde tengamos los ficheros de composer (/var/www/html)
+
+```shell
+docker exec -ti my_drupal8_project_php bash
+```
+
 1. Comprobar que existen paquetes sin actualizar
 
 ```shell
